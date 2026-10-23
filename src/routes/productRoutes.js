@@ -4,16 +4,18 @@ const productController = require("../controllers/productController");
 
 const verificarAdmin = require("../middlewares/adminMiddleware");
 
+const authMiddleware = require("../middlewares/authMiddleware");
+
 const router = express.Router(); 
 
 router.get("/produtos", productController.listarProdutos);
 
 router.get("/produtos/:id", productController.buscarProdutoPorId);
 
-router.post("/produtos", verificarAdmin, productController.criarProduto);
+router.post("/produtos", authMiddleware, verificarAdmin, productController.criarProduto);
 
-router.put("/produtos/:id", productController.atualizarProduto);
+router.put("/produtos/:id",authMiddleware, productController.atualizarProduto);
 
-router.delete("/produtos/:id", verificarAdmin, productController.deletarProduto);                                                  //verificarAdmin
+router.delete("/produtos/:id",authMiddleware, verificarAdmin, productController.deletarProduto);                                                  //verificarAdmin
 
 module.exports = router;

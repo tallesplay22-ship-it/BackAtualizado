@@ -1,9 +1,32 @@
 const Product = require("../models/Product");
 
-async function listarProdutos() {
-  const produtos = await Product.find();
+async function listarProdutos(filtros) {
+  const { categoria, search, page = 1, limit = 10 } = filtros;
 
-  return produtos;
+  const query = {};
+
+  if (categoria) {
+    query.categoria = categoria;
+  }
+
+  if (search) {
+    query.nome = { $regex: search, $options: "i" };
+  }
+
+  const skip = (Number(page) - 1) * Number(limit);
+
+  const produtos = await Product.find(query)
+    .skip(skip)
+    .limit(Number(limit));
+
+  const total = await Product.countDocuments(query);
+
+  return {
+    data: produtos,
+    page: Number(page),
+    limit: Number(limit),
+    total
+  };
 }
 
 async function buscarProdutoPorId(id) {
