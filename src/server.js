@@ -10,6 +10,7 @@ const authRoutes = require("./routes/authRoutes");
 const profileRoutes = require("./routes/profileRoutes")
 const logger = require('./middlewares/loggerMiddleware')
 const errorHandler = require('./middlewares/errorMiddleware')
+const orderRoutes = require("./routes/orderRoutes");
 
 const app = express(); // amarzenando o return da função, que é um obejto nesse caso
 
@@ -28,6 +29,8 @@ app.use(userRoutes);
 app.use(authRoutes);
 
 app.use(profileRoutes);
+
+app.use(orderRoutes);
 
 // app.use((req, res) => {
 //     console.log("Rota não encontrada:", req.method, req.originalUrl);
