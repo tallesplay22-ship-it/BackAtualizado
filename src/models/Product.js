@@ -17,10 +17,6 @@ const productSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  vendeu_muito: {
-    type: Boolean,
-    required: true,
-  },
 })
 
 const Product = mongoose.model('Product', productSchema)
